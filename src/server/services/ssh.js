@@ -1,6 +1,7 @@
 const SSHClient = require('ssh2-promise');
 
 const pool = {};
+const status = {};
 
 function getKey({ host, port, user, password }) {
   console.log(`${host}:${port}:${user}:${password}`);
@@ -9,7 +10,8 @@ function getKey({ host, port, user, password }) {
 
 function add(server) {
   const { host, port, user: username, password } = server;
-  const client = pool[getKey(server)] = new SSHClient({
+  const key = getKey(server);
+  const client = pool[key] = new SSHClient({
     host,
     port,
     username,
@@ -17,7 +19,9 @@ function add(server) {
     reconnect: false,
     readyTimeout: 5000,
   }, true);
-  client.connect().catch((e) => {});
+  client.on('ssh:disconnect', () => {
+    status[key] = client.connect();
+  });
   return client;
 }
 
@@ -26,9 +30,11 @@ function getClient(server) {
 }
 
 async function getState(server) {
+  const client = getClient(server);
+  const key = getKey(server);
+  status[key] = status[key] || client.connect();
   try {
-    const client = getClient(server);
-    await client.connect();
+    await status[key];
     return true;
   } catch (e) {
     return false;
