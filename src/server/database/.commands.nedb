@@ -1,0 +1,2 @@
+{"name":"restart nginx","command":"systemctl restart nginx","id":"r-jzfRPR","_id":"AoCKPcsjCPiT8S5s"}
+{"name":"reboot","command":"shutdown -r now","id":"YSZj-JhF","_id":"vC3gkDt4xVKYdNcD"}
