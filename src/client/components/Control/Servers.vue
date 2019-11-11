@@ -9,113 +9,77 @@
           class="elevation-1"
         >
           <template v-slot:top>
-            <v-toolbar flat color="white">
-              <v-toolbar-title>Servers</v-toolbar-title>
-              <v-divider
-                class="mx-4"
-                inset
-                vertical
-              ></v-divider>
-              <v-spacer></v-spacer>
-              <v-dialog v-model="editorConfig.isEnabled" max-width="1000px">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark class="mb-2" v-on="on" @click="editItem()">New Item</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-form ref="editor" v-model="valid" lazy-validation>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="6" md="6">
-                            <v-text-field
-                              :rules="[v => !!v || 'Name is required']"
-                              v-model="editorConfig.item.name"
-                              required
-                              label="Server Name"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="6">
-                            <v-text-field
-                              :rules="[v => !!v || 'Host is required']"
-                              v-model="editorConfig.item.host"
-                              required
-                              label="Host"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="2" md="2">
-                            <v-text-field
-                              :rules="[v => !!v || 'Port is required']"
-                              v-model="editorConfig.item.port"
-                              required
-                              label="SSH Port"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="5" md="5">
-                            <v-text-field
-                              :rules="[v => !!v || 'User is required']"
-                              v-model="editorConfig.item.user"
-                              required
-                              label="User"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="5" md="5">
-                            <v-text-field
-                              :rules="[v => !!v || 'Password is required']"
-                              v-model="editorConfig.item.password"
-                              required
-                              label="Password"
-                            ></v-text-field>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-form>
-                  </v-card-text>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" :disabled="!valid" text @click="editorConfig.isUpdateMode ? saveItem() : createItem()">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-toolbar>
+            <item-bar name="Server" :editorConfig="editorConfig"
+                      @add="editItem()"
+                      @save="saveItem()"
+                      @create="createItem()"
+                      @close="close()"
+            >
+              <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    :rules="[v => !!v || 'Name is required']"
+                    v-model="editorConfig.item.name"
+                    required
+                    label="Server Name"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    :rules="[v => !!v || 'Host is required']"
+                    v-model="editorConfig.item.host"
+                    required
+                    label="Host"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="2" md="2">
+                  <v-text-field
+                    :rules="[v => !!v || 'Port is required']"
+                    v-model="editorConfig.item.port"
+                    required
+                    label="SSH Port"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="5" md="5">
+                  <v-text-field
+                    :rules="[v => !!v || 'User is required']"
+                    v-model="editorConfig.item.user"
+                    required
+                    label="User"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="5" md="5">
+                  <v-text-field
+                    :rules="[v => !!v || 'Password is required']"
+                    v-model="editorConfig.item.password"
+                    required
+                    label="Password"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+            </item-bar>
           </template>
           <template v-slot:item.latency="{ item }">
-            <v-chip :color="item.latency > 0 ? 'green' : 'red'" dark>{{ item.latency ? item.latency : 'undefined' }}</v-chip>
+            <v-chip :color="item.latency > 0 ? 'green' : 'red'" dark>{{ item.latency ? item.latency : 'timeout' }}</v-chip>
           </template>
           <template v-slot:item.sshStatus="{ item }">
             <v-icon :class="item.sshStatus ? 'green--text' : 'red--text'">{{ item.sshStatus ? 'mdi-cloud-sync' : 'mdi-sync-alert' }}</v-icon>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-icon
-              @click="editItem(item)"
-            >
-              mdi-pencil
-            </v-icon>
-            <v-icon
-              @click="removeItem(item)"
-            >
-              mdi-delete
-            </v-icon>
+            <item-actions @remove="removeItem(item)" @edit="editItem(item)"/>
             <v-menu dark offset-y>
               <template v-slot:activator="{ on }">
-                <v-icon
-                  v-on="on"
-                >
-                  mdi-console
-                </v-icon>
+                <v-btn text icon color="black" v-on="on">
+                  <v-icon class="black--text">mdi-console</v-icon>
+                </v-btn>
               </template>
               <v-list dense>
                 <v-subheader class="title">{{ item.name }}</v-subheader>
-                <v-list-item
-                  v-for="({ name }, index) in commands"
-                  :key="index"
-                  @click=""
-                >
+                <v-list-item v-for="({ name }, index) in commands" :key="index" @click="">
                   <v-list-item-title>
-                    <v-icon class="light-green--text">
-                      mdi-console-line
-                    </v-icon>
+                    <v-icon class="light-green--text">mdi-console-line</v-icon>
                     <span class="grey--text text--lighten-3 subtitle-1">{{ name.toLowerCase() }}</span>
                   </v-list-item-title>
                 </v-list-item>
