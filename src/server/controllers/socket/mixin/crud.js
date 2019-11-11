@@ -12,11 +12,13 @@ module.exports = (model) => ({
       console.log('Creating ', entity);
       await model.insert(entity);
     },
-    async update({ id, item }) {
-      await model.update({ id }, item);
+    async update({ _id, item }) {
+      console.log('Updating ', _id, item);
+      await model.update({ _id }, item);
     },
-    async remove({ id }) {
-      await model.remove({ id });
+    async remove({ _id }) {
+      console.log('Removing ', _id);
+      await model.remove({ _id });
     }
   }
 });

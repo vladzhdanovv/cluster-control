@@ -39,7 +39,7 @@ export default (options) => {
         const target = getTarget(state);
         Vue.set(target, target.indexOf(origin), { ...origin, ...item });
       },
-      [ REMOVE ](state, item) {
+      [ REMOVE ](state, { item }) {
         const target = getTarget(state);
         target.splice(target.indexOf(item), 1);
       },

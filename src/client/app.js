@@ -7,6 +7,9 @@ import router from './router';
 import VueRouter from 'vue-router';
 import App from './components/App';
 import PageToolbar from './components/PageToolbar';
+import ItemActions from './components/Control/ItemActions';
+import ItemBar from './components/Control/ItemBar';
+import NoItems from './components/Control/NoItems';
 import Snotify from 'vue-snotify';
 import VeeValidate from 'vee-validate';
 import VueObserveVisibility from 'vue-observe-visibility';
@@ -31,6 +34,9 @@ import Component from 'vue-class-component';
   Vue.use(VueRouter);
   Vue.use(VeeValidate);
   Vue.component('page-toolbar', PageToolbar);
+  Vue.component('item-actions', ItemActions);
+  Vue.component('item-bar', ItemBar);
+  Vue.component('no-items', NoItems);
   Vue.config.productionTip = false;
   new Vue({
     store,
