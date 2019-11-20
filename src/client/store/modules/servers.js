@@ -22,6 +22,7 @@ export default mixin({
   actions: {
     checkLatency(ctx, host) {},
     checkSsh() {},
+    run() {},
     updateLatency(ctx, { host, latency }) {
       updateServerField(ctx, types.LATENCY_UPDATE, host, latency);
     },
@@ -39,6 +40,7 @@ export default mixin({
   },
   socket: {
     actions: {
+      run: '=',
       checkLatency: '=',
       checkSsh: '=',
     },

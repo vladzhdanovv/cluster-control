@@ -1,12 +1,15 @@
 module.exports = (model) => ({
   emitters: {
-    async data() {
-      this.emit('data', await model.find());
+    data(data) {
+      this.emit('data', data);
     }
   },
   methods: {
+    getDataPromise() {
+      return model.find();
+    },
     async load() {
-      this.emitters.data();
+      this.emitters.data(await this.methods.getDataPromise());
     },
     async create(entity) {
       console.log('Creating ', entity);

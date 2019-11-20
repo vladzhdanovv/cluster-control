@@ -77,10 +77,10 @@
               </template>
               <v-list dense>
                 <v-subheader class="title">{{ item.name }}</v-subheader>
-                <v-list-item v-for="({ name }, index) in commands" :key="index" @click="">
-                  <v-list-item-title>
+                <v-list-item v-for="(command, index) in commands" :key="index" @click="">
+                  <v-list-item-title @click="run({ server: item, command })">
                     <v-icon class="light-green--text">mdi-console-line</v-icon>
-                    <span class="grey--text text--lighten-3 subtitle-1">{{ name.toLowerCase() }}</span>
+                    <span class="grey--text text--lighten-3 subtitle-1">{{ command.name.toLowerCase() }}</span>
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -110,6 +110,7 @@
   }, 'id')) {
     @serversModule.Action checkLatency;
     @serversModule.Action checkSsh;
+    @serversModule.Action run;
     @serversModule.Action load;
     @commandsModule.Action('load') loadCommands;
     @commandsModule.State('items') commands;

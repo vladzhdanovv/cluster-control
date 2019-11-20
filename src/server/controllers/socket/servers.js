@@ -2,6 +2,7 @@ const mixin = require('mixin-deep');
 const { servers } = require('../../database');
 const crud = require('./mixin/crud');
 const ping = require('../../commands/server/ping');
+const run = require('../../commands/server/run');
 const checkSsh = require('../../commands/server/checkSsh');
 
 module.exports = mixin({
@@ -20,5 +21,10 @@ module.exports = mixin({
       const status = await checkSsh(server);
       this.emit('updateSshStatus', { host, status });
     },
+    async run({ server, command }) {
+      console.log(`Sending command ${command.name} to server ${server.name}`)
+      const output = await run(server, command.command);
+      this.emit('commandOutput', { command, server, output })
+    }
   }
 }, crud(servers));

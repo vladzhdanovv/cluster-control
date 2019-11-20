@@ -2,68 +2,68 @@
   <v-container>
     <v-layout column>
       <v-flex xs12>
-        <v-data-table
-          :headers="headers"
-          :items="items"
-          sort-by="calories"
-          class="elevation-1"
-        >
+        <v-data-table :headers="headers" :items="items" class="elevation-1">
           <template v-slot:top>
-            <v-toolbar flat color="white">
-              <v-toolbar-title>Servers</v-toolbar-title>
-              <v-divider
-                class="mx-4"
-                inset
-                vertical
-              ></v-divider>
-              <v-spacer></v-spacer>
-              <v-dialog v-model="editorConfig.isEnabled" max-width="1000px">
-                <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark class="mb-2" v-on="on" @click="editItem()">New Item</v-btn>
-                </template>
-                <v-card>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="8" md="6">
-                          <v-text-field v-model="editorConfig.item.host" label="IP"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="2" md="3">
-                          <v-text-field v-model="editorConfig.item.port" label="SSH Port"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="2" md="3">
-                          <v-text-field v-model="editorConfig.item.password" label="SSH Password"></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="editorConfig.isUpdateMode ? saveItem() : createItem()">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-toolbar>
+            <item-bar name="Schedule" :editorConfig="editorConfig"
+                      @add="editItem()"
+                      @save="saveItem()"
+                      @create="createItem()"
+                      @close="close()"
+            >
+              <v-container>
+                <v-row>
+                  <v-col cols="10" sm="10" md="10">
+                    <select-server :disabled="editorConfig.item.isAllServers" v-model="editorConfig.item.servers" multiple chips label="Servers"/>
+                  </v-col>
+                  <v-col cols="2" sm="2" md="2">
+                    <v-checkbox v-model="editorConfig.item.isAllServers" label="Use for all servers"/>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <select-command :disabled="editorConfig.item.isAllServers" v-model="editorConfig.item.command" label="Command"/>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-menu
+                      ref="menu"
+                      v-model="timePickerMenu"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      :return-value.sync="editorConfig.item.time"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="editorConfig.item.time"
+                          label="Time for launch"
+                          readonly
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-time-picker
+                        v-if="timePickerMenu"
+                        v-model="editorConfig.item.time"
+                        @click:minute="$refs.menu.save(editorConfig.item.time)"
+                        full-width
+                      ></v-time-picker>
+                    </v-menu>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </item-bar>
+          </template>
+          <template v-slot:item.servers="{ item }">
+            <v-chip v-if="item.servers" color="amber" v-for="(server, index) in item.servers" :key="index">server.name</v-chip>
+          </template>
+          <template v-slot:item.command="{ item }">
+            {{ item.command.name }}
           </template>
           <template v-slot:item.action="{ item }">
-            <v-icon
-              small
-              class="mr-2"
-              @click="editItem(item)"
-            >
-              mdi-pencil
-            </v-icon>
-            <v-icon
-              small
-              @click="removeItem(item)"
-            >
-              mdi-delete
-            </v-icon>
+            <item-actions @edit="editItem(item)" @remove="removeItem(item)"></item-actions>
           </template>
           <template v-slot:no-data>
-            <v-btn color="primary" @click="load">Reset</v-btn>
+            <no-items @loadItems="load()"></no-items>
           </template>
         </v-data-table>
       </v-flex>
@@ -74,25 +74,34 @@
 <script>
   import Component, { mixins } from 'vue-class-component';
   import EditableMixin from '../../mixins/editable';
+  import SelectServer from '../SelectServer';
+  import SelectCommand from '../SelectCommand';
 
-  @Component()
-  export default class ServersControl extends mixins(EditableMixin('servers', {
-    host: '',
-    port: '22',
-    password: '',
+  @Component({
+    components: {
+      SelectServer,
+      SelectCommand,
+    }
+  })
+  export default class SchedulesControl extends mixins(EditableMixin('schedules', {
+    servers: [],
+    command: '',
+    isAllServers: false,
+    time: '00:00'
   }, 'id')) {
+    timePickerMenu = false;
     headers = [
       {
-        text: "Host",
+        text: "Servers",
         align: "left",
         sortable: false,
-        value: "host"
+        value: "servers"
       },
       {
-        text: "Port",
-        align: "center",
+        text: "Command",
+        align: "left",
         sortable: false,
-        value: "port"
+        value: "command"
       },
       {
         text: "Actions",
@@ -100,6 +109,6 @@
         sortable: false,
         value: "action",
       }
-    ]
+    ];
   }
 </script>
