@@ -12,14 +12,15 @@
             >
               <v-container>
                 <v-row>
-                  <v-col cols="10" sm="10" md="10">
-                    <select-server :disabled="editorConfig.item.isAllServers" v-model="editorConfig.item.servers" multiple chips label="Servers"/>
-                  </v-col>
                   <v-col cols="2" sm="2" md="2">
-                    <v-checkbox v-model="editorConfig.item.isAllServers" label="Use for all servers"/>
+                    <v-checkbox :value="editorConfig.item.isGlobal" @change="setGlobal($event)" label="Global" />
+                  </v-col>
+                  <v-col cols="10" sm="10" md="10">
+                    {{editorConfig.item.servers}}
+                    <select-server :disabled="editorConfig.item.isGlobal" v-model="editorConfig.item.servers" multiple chips label="Servers"/>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
-                    <select-command :disabled="editorConfig.item.isAllServers" v-model="editorConfig.item.command" label="Command"/>
+                    <select-command v-model="editorConfig.item.command" label="Command"/>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-menu
@@ -76,6 +77,9 @@
   import EditableMixin from '../../mixins/editable';
   import SelectServer from '../SelectServer';
   import SelectCommand from '../SelectCommand';
+  import { namespace } from 'vuex-class';
+
+  const serversModule = namespace('servers');
 
   @Component({
     components: {
@@ -86,9 +90,10 @@
   export default class SchedulesControl extends mixins(EditableMixin('schedules', {
     servers: [],
     command: '',
-    isAllServers: false,
+    isGlobal: false,
     time: '00:00'
   }, 'id')) {
+    @serversModule.State(state => state.items) servers;
     timePickerMenu = false;
     headers = [
       {
@@ -110,5 +115,11 @@
         value: "action",
       }
     ];
+    setGlobal(value) {
+      this.editorConfig.item.isGlobal = !!value;
+      const { servers } = this.editorConfig.item;
+      this.__before = servers.splice(0, servers.length);
+      servers.push(...(value ? this.servers.map(({ _id }) => _id) : this.__before));
+    }
   }
 </script>

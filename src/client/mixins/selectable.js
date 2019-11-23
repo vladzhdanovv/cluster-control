@@ -13,7 +13,7 @@ export default (moduleName, humanName, labelProperty, valueProperty) => {
         attrs: { ...$attrs },
         props: { value, items, itemText: labelProperty, itemValue: valueProperty },
         on: {
-          input: (e) => this.$emit('input', e.target.value),
+          change: (e) => this.$emit('input', e),
         }
       });
     },
