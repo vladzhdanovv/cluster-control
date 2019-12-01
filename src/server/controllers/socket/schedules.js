@@ -10,8 +10,8 @@ schedulesCrud.methods.getDataPromise = async function () {
     .then(populate);
 };
 schedulesCrud.methods.create = async function(payload) {
-  await create.call(this, payload);
-  commandsScheduler.add(payload);
+  const entity = await create.call(this, payload);
+  commandsScheduler.add(entity);
 };
 schedulesCrud.methods.update = async function(payload) {
   const { _id, item: { time } } = payload;
