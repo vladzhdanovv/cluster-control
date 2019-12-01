@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm i -g cluster-control
+npm i -g cluster-control pm2
 ```
 
 ## Running
