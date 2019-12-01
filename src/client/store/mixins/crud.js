@@ -12,10 +12,10 @@ const defaultOptions = {
   setFetchedFlag: (state, value) => state.fetched = value,
   setIndex: (state, value) => {
     if (value && value.id) state.index[value.id] = value;
-  }
+  },
 };
 export default (options) => {
-  const { getTarget, setTarget, setFetchedFlag, setIndex } = Object.assign({}, defaultOptions, options);
+  const { getTarget, setTarget, setFetchedFlag, setIndex, useShortId } = Object.assign({}, defaultOptions, options);
   return mixin({
     actions: {
       update({ commit }, patch) {
@@ -26,7 +26,7 @@ export default (options) => {
       },
       createReal() {},
       create({ dispatch, commit }, item) {
-        item.id = shortid.generate();
+        if (useShortId) item.id = shortid.generate();
         commit(ADD, item);
         dispatch('createReal', item);
       },

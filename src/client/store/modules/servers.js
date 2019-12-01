@@ -41,8 +41,6 @@ export default mixin({
   socket: {
     actions: {
       run: '=',
-      checkLatency: '=',
-      checkSsh: '=',
     },
     events: {
       updateLatency: '=',

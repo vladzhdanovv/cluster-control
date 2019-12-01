@@ -92,6 +92,11 @@
         </v-data-table>
       </v-flex>
     </v-layout>
+    <v-layout column>
+      <v-flex xs12>
+        <view-log/>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -99,15 +104,18 @@
   import Component, { mixins } from 'vue-class-component';
   import { namespace } from 'vuex-class';
   import EditableMixin from '../../mixins/editable';
+  import ViewLog from '../../components/ViewLog';
 
   const serversModule = namespace('servers');
   const commandsModule = namespace('commands');
 
-  @Component()
+  @Component({
+    components: { ViewLog },
+  })
   export default class ServersControl extends mixins(EditableMixin('servers', {
     port: '22',
     user: 'root',
-  }, 'id')) {
+  }, '_id')) {
     @serversModule.Action checkLatency;
     @serversModule.Action checkSsh;
     @serversModule.Action run;

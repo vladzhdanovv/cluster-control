@@ -6,6 +6,7 @@ module.exports = async (server) => {
   setupController('/servers', require('./servers'));
   setupController('/commands', require('./commands'));
   setupController('/schedules', require('./schedules'));
+  setupController('/logs', require('./logs'));
 
   return io;
 };

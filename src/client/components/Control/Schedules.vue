@@ -16,7 +16,6 @@
                     <v-checkbox :value="editorConfig.item.isGlobal" @change="setGlobal($event)" label="Global" />
                   </v-col>
                   <v-col cols="10" sm="10" md="10">
-                    {{editorConfig.item.servers}}
                     <select-server :disabled="editorConfig.item.isGlobal" v-model="editorConfig.item.servers" multiple chips label="Servers"/>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
@@ -45,6 +44,7 @@
                       <v-time-picker
                         v-if="timePickerMenu"
                         v-model="editorConfig.item.time"
+                        format="24hr"
                         @click:minute="$refs.menu.save(editorConfig.item.time)"
                         full-width
                       ></v-time-picker>
@@ -55,10 +55,10 @@
             </item-bar>
           </template>
           <template v-slot:item.servers="{ item }">
-            <v-chip v-if="item.servers" color="amber" v-for="(server, index) in item.servers" :key="index">server.name</v-chip>
+            <v-chip v-if="item.Servers" color="amber" v-for="(server, index) in item.Servers" :key="index">{{server && server.name}}</v-chip>
           </template>
           <template v-slot:item.command="{ item }">
-            {{ item.command.name }}
+            {{ item.Command && item.Command.name }}
           </template>
           <template v-slot:item.action="{ item }">
             <item-actions @edit="editItem(item)" @remove="removeItem(item)"></item-actions>
@@ -92,7 +92,7 @@
     command: '',
     isGlobal: false,
     time: '00:00'
-  }, 'id')) {
+  }, '_id')) {
     @serversModule.State(state => state.items) servers;
     timePickerMenu = false;
     headers = [

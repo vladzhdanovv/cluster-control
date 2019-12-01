@@ -8,10 +8,11 @@ export default (moduleName, humanName, labelProperty, valueProperty) => {
   @Component({
     components: { VSelect },
     render(h) {
-      const { $attrs = {}, props: { value } = {}, items = []} = this;
+      const { $attrs = {}, $props = {}, items = [] } = this;
+
       return h('v-select', {
         attrs: { ...$attrs },
-        props: { value, items, itemText: labelProperty, itemValue: valueProperty },
+        props: { ...$props, items, itemText: labelProperty, itemValue: valueProperty },
         on: {
           change: (e) => this.$emit('input', e),
         }

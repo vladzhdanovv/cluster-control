@@ -2,7 +2,7 @@ const LOADING_START = 'LOADING_START';
 const LOADING_FINISH = 'LOADING_FINISH';
 const FILL = 'FILL';
 const defaultOptions = {
-  setTarget: (state, data) => state.data = data,
+  setTarget: (state, data) => state.items = data,
   setFetchedFlag: (state, value) => state.fetched = value,
   setIndex: (state, value) => {
     if (value && value.id) state.index[value.id] = value;

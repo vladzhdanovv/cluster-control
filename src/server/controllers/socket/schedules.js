@@ -1,21 +1,26 @@
-const { schedules: schedulesDatabase, servers: serversDatabase, commands: commandsDatabase } = require('../../database');
+const { schedulesDatabase } = require('../../database');
+const populate = require('../../commands/schedule/populate');
+const commandsScheduler = require('../../services/commandsScheduler');
 const crud = require('./mixin/crud');
 
-const remap = (acc, item) => Object.assign(acc, {[item._id]: item});
 const schedulesCrud = crud(schedulesDatabase);
-const originalDataPromiseGetter = schedulesCrud.methods.getDataPromise;
+const { getDataPromise, create, update, remove } = schedulesCrud.methods;
 schedulesCrud.methods.getDataPromise = async function () {
-  const [servers, commands] = await Promise.all([
-    serversDatabase.find({}).then(servers => servers.reduce(remap, {})),
-    commandsDatabase.find({}).then(commands => commands.reduce(remap, {})),
-  ]);
-  return originalDataPromiseGetter.call(this)
-    .then((schedules) => {
-      schedules.forEach((schedule) => {
-        schedule.servers = schedule.servers && schedule.servers.map(serverId => servers[serverId]);
-        schedule.command = schedule.command && commands[schedule.command];
-      });
-    });
+  return getDataPromise.call(this)
+    .then(populate);
+};
+schedulesCrud.methods.create = async function(payload) {
+  await create.call(this, payload);
+  commandsScheduler.add(payload);
+};
+schedulesCrud.methods.update = async function(payload) {
+  const { _id, item: { time } } = payload;
+  await update.call(this, payload);
+  commandsScheduler.add({ _id, time });
+};
+schedulesCrud.methods.remove = async function(payload) {
+  await remove.call(this, payload);
+  commandsScheduler.remove(payload._id);
 };
 
 module.exports = schedulesCrud;

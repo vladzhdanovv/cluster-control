@@ -1,4 +1,4 @@
-const { commands } = require('../../database');
+const { commandsDatabase } = require('../../database');
 const crud = require('./mixin/crud');
 
-module.exports = crud(commands);
+module.exports = crud(commandsDatabase);

@@ -1,9 +1,15 @@
-module.exports = client => ({
-  async load(options) {
-    this.emit('data', await this.methods._load(options));
+module.exports = (model) => ({
+  emitters: {
+    data(data) {
+      this.emit('data', data);
+    }
   },
-  _load(options) {
-    options = options || {};
-    return client.getList(options);
-  },
+  methods: {
+    getDataPromise() {
+      return model.find();
+    },
+    async load() {
+      this.emitters.data(await this.methods.getDataPromise());
+    },
+  }
 });
