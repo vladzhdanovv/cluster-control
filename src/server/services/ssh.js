@@ -4,7 +4,6 @@ const pool = {};
 const status = {};
 
 function getKey({ host, port, user, password }) {
-  console.log(`${host}:${port}:${user}:${password}`);
   return `${host}:${port}:${user}:${password}`;
 }
 

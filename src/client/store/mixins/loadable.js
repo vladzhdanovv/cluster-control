@@ -2,7 +2,7 @@ const LOADING_START = 'LOADING_START';
 const LOADING_FINISH = 'LOADING_FINISH';
 const FILL = 'FILL';
 const defaultOptions = {
-  setTarget: (state, data) => state.data = data,
+  setTarget: (state, data) => state.items = data,
   setFetchedFlag: (state, value) => state.fetched = value,
   setIndex: (state, value) => {
     if (value && value.id) state.index[value.id] = value;
@@ -24,7 +24,7 @@ export default (options) => {
       [ LOADING_START ]: state => setFetchedFlag(state, false),
       [ LOADING_FINISH ]: state => setFetchedFlag(state, true),
       [ FILL ]: (state, data) => {
-        setTarget(state, data);
+        setTarget(state, data || []);
         if (Array.isArray(data)) data.map(item => setIndex(state, item));
       },
     },

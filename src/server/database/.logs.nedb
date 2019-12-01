@@ -1,0 +1,26 @@
+{"host":"10.10.10.10","command":"systemctl restart nginx","isError":true,"_id":"2E8vyUt1THUtXIXn","createdAt":{"$$date":1575225252731},"updatedAt":{"$$date":1575225252731}}
+{"host":"10.10.10.10","command":"systemctl restart nginx","isError":true,"_id":"2xl5HWlkNHieYq9T","createdAt":{"$$date":1575225277152},"updatedAt":{"$$date":1575225277152}}
+{"host":"google.com","command":"echo \"Hello world!\"","output":null,"isError":true,"_id":"4LyuFDJ6RQS98lRq","createdAt":{"$$date":1575224111771},"updatedAt":{"$$date":1575224111771}}
+{"host":"google.com","command":"systemctl restart nginx","output":"Error: Timed out while waiting for handshake","isError":true,"_id":"8kyetQSpCPVczvhB","createdAt":{"$$date":1575225363124},"updatedAt":{"$$date":1575225363124}}
+{"host":"127.0.0.1","output":null,"isError":true,"_id":"ALIHm5Fn50PR2TPt","createdAt":{"$$date":1575224400732},"updatedAt":{"$$date":1575224400732}}
+{"host":"google.com","command":"shutdown -r now","output":null,"isError":true,"_id":"KISNcuyrjWsJA3LG","createdAt":{"$$date":1575225020524},"updatedAt":{"$$date":1575225020524}}
+{"host":"127.0.0.1","command":"echo \"Hello world!\"","output":"Hello world!\n","isError":false,"_id":"KiPReaJoiLYPHCq2","createdAt":{"$$date":1575224300892},"updatedAt":{"$$date":1575224300892}}
+{"host":"google.com","command":"echo \"Hello world!\"","output":null,"isError":true,"_id":"OfNrLPjMyYnmagl3","createdAt":{"$$date":1575224295424},"updatedAt":{"$$date":1575224295424}}
+{"host":"10.10.10.10","command":"echo \"Hello world!\"","output":"Hello world!\n","isError":false,"_id":"TDBuZb742LeZEhJF","createdAt":{"$$date":1575224581122},"updatedAt":{"$$date":1575224581122}}
+{"host":"10.10.10.10","output":null,"isError":true,"_id":"UEMR3AipzrXafZf4","createdAt":{"$$date":1575224400720},"updatedAt":{"$$date":1575224400720}}
+{"host":"127.0.0.1","commandName":"echo","output":{},"_id":"YDw8eqeq3AzN5llQ","createdAt":{"$$date":1575222337115},"updatedAt":{"$$date":1575222337115}}
+{"host":"127.0.0.1","commandName":"echo","output":"Hello world!\n","_id":"ZSMuYGs6iUUJnxTa","createdAt":{"$$date":1575223231649},"updatedAt":{"$$date":1575223231649}}
+{"host":"google.com","command":"echo \"Hello world!\"","output":"!!!ERROR","_id":"bmoQqpqLcCMcbeO0","createdAt":{"$$date":1575223953121},"updatedAt":{"$$date":1575223953121}}
+{"host":"127.0.0.1","command":"systemctl restart nginx","output":"Failed to restart nginx.service: Interactive authentication required.\nSee system logs and 'systemctl status nginx.service' for details.\n","isError":true,"_id":"cEXmZwh4RMBkVIEZ","createdAt":{"$$date":1575225305876},"updatedAt":{"$$date":1575225305876}}
+{"host":"127.0.0.1","commandName":"echo","output":"Hello world!\n","_id":"d7OfNhQNIp3xZ7eh","createdAt":{"$$date":1575223504628},"updatedAt":{"$$date":1575223504628}}
+{"host":"127.0.0.1","command":"systemctl restart nginx","output":null,"isError":true,"_id":"dNqJCm0dFmi48wGo","createdAt":{"$$date":1575225035662},"updatedAt":{"$$date":1575225035662}}
+{"host":"10.10.10.10","command":"systemctl restart nginx","isError":true,"_id":"ehxoVjPLJYMypxqD","createdAt":{"$$date":1575225192490},"updatedAt":{"$$date":1575225192490}}
+{"host":"10.10.10.10","command":"echo \"Hello world!\"","output":"Hello world!\n","isError":false,"_id":"oHok4Vte3MuJPAZv","createdAt":{"$$date":1575224305388},"updatedAt":{"$$date":1575224305388}}
+{"host":"127.0.0.1","command":"echo \"Hello world!\"","output":"Hello world!\n","_id":"paIZEpa6emJuTvZ9","createdAt":{"$$date":1575223800368},"updatedAt":{"$$date":1575223800368}}
+{"host":"10.10.10.10","command":"echo \"Hello world!\"","output":"Hello world!\n","_id":"piHdeSskzmTiKGl9","createdAt":{"$$date":1575223808891},"updatedAt":{"$$date":1575223808891}}
+{"host":"10.10.10.10","command":"echo \"Hello world!\"","output":"Hello world!\n","isError":false,"_id":"wMzjv8u6jAY5LpN0","createdAt":{"$$date":1575225381081},"updatedAt":{"$$date":1575225381081}}
+{"host":"127.0.0.1","command":"echo \"Hello world!\"","output":"Hello world!\n","isError":false,"_id":"y7kV3Xgcipkr4nVc","createdAt":{"$$date":1575224581130},"updatedAt":{"$$date":1575224581130}}
+{"host":"10.10.10.10","commandName":"echo","output":{},"_id":"yANkawN7xsHeYA1t","createdAt":{"$$date":1575222276143},"updatedAt":{"$$date":1575222276143}}
+{"host":"127.0.0.1","commandName":"echo","output":"Hello world!\n","_id":"yg0qyTVtQZCPDSqo","createdAt":{"$$date":1575223471888},"updatedAt":{"$$date":1575223471888}}
+{"host":"127.0.0.1","command":"shutdown -r now","output":"Failed to set wall message, ignoring: Interactive authentication required.\n","isError":true,"_id":"zOVnxhGGvmyA69l1","createdAt":{"$$date":1575225369917},"updatedAt":{"$$date":1575225369917}}
+{"$$indexCreated":{"fieldName":"createdAt","unique":false,"sparse":false}}

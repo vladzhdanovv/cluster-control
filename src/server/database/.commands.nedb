@@ -1,13 +1,1 @@
-{"name":"restart nginx","command":"systemctl restart nginx","id":"r-jzfRPR","_id":"AoCKPcsjCPiT8S5s"}
 {"name":"reboot","command":"shutdown -r now","id":"YSZj-JhF","_id":"vC3gkDt4xVKYdNcD"}
-{"name":"echo","command":"echo \"Hello world!\"","id":"2MzRdKb1","_id":"wytCEvioABCne7Vf"}
-{"name":"trash","command":"fuuu","id":"c6OApMQs","_id":"46i4dQzf5NhLgTUJ"}
-{"$$deleted":true,"_id":"46i4dQzf5NhLgTUJ"}
-{"name":"trash","command":"fu","id":"sUVXb0kf","_id":"Fqk4c5WU3XpscIZZ"}
-{"$$deleted":true,"_id":"Fqk4c5WU3XpscIZZ"}
-{"name":"t","command":"t","id":"soJEOHTi","_id":"4u4tx290nxg7s5Oi"}
-{"$$deleted":true,"_id":"4u4tx290nxg7s5Oi"}
-{"name":"t","command":"t","id":"5vkTaH9Q","_id":"OgzdDzHlIC4ikufx"}
-{"$$deleted":true,"_id":"OgzdDzHlIC4ikufx"}
-{"name":"trash","command":"polniy","id":"b9Yqk0Oj","_id":"le3P9R9Mp7UsLRjU"}
-{"$$deleted":true,"_id":"le3P9R9Mp7UsLRjU"}

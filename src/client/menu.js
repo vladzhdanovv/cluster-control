@@ -12,6 +12,6 @@ export default [
   {
     title: 'Command Scheduler',
     action: 'mdi-clock-outline',
-    to: '/scheduler'
+    to: '/schedules'
   },
 ];

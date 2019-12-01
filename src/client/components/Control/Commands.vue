@@ -41,7 +41,7 @@
   export default class ServersControl extends mixins(EditableMixin('commands', {
     name: '',
     command: '',
-  }, 'id')) {
+  }, '_id')) {
     headers = [
       {
         text: "Name",

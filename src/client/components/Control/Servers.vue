@@ -77,10 +77,10 @@
               </template>
               <v-list dense>
                 <v-subheader class="title">{{ item.name }}</v-subheader>
-                <v-list-item v-for="({ name }, index) in commands" :key="index" @click="">
-                  <v-list-item-title>
+                <v-list-item v-for="(command, index) in commands" :key="index" @click="">
+                  <v-list-item-title @click="run({ server: item, command })">
                     <v-icon class="light-green--text">mdi-console-line</v-icon>
-                    <span class="grey--text text--lighten-3 subtitle-1">{{ name.toLowerCase() }}</span>
+                    <span class="grey--text text--lighten-3 subtitle-1">{{ command.name.toLowerCase() }}</span>
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -92,6 +92,11 @@
         </v-data-table>
       </v-flex>
     </v-layout>
+    <v-layout column>
+      <v-flex xs12>
+        <view-log/>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -99,17 +104,21 @@
   import Component, { mixins } from 'vue-class-component';
   import { namespace } from 'vuex-class';
   import EditableMixin from '../../mixins/editable';
+  import ViewLog from '../../components/ViewLog';
 
   const serversModule = namespace('servers');
   const commandsModule = namespace('commands');
 
-  @Component()
+  @Component({
+    components: { ViewLog },
+  })
   export default class ServersControl extends mixins(EditableMixin('servers', {
     port: '22',
     user: 'root',
-  }, 'id')) {
+  }, '_id')) {
     @serversModule.Action checkLatency;
     @serversModule.Action checkSsh;
+    @serversModule.Action run;
     @serversModule.Action load;
     @commandsModule.Action('load') loadCommands;
     @commandsModule.State('items') commands;
