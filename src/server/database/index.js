@@ -1,12 +1,18 @@
 const { resolve } = require('path');
 const Datastore = require('nedb-promises');
+const homedir = require('os').homedir();
+const { mkdirSync } = require('fs');
 
+const databaseDirectory = resolve(homedir, '.cluster-control');
+try {
+  mkdirSync(databaseDirectory);
+} catch (e) {}
 const databases = {
-  serversDatabase: Datastore.create({ filename: resolve(__dirname, '.servers.nedb'), autoload: true }),
-  commandsDatabase: Datastore.create({ filename: resolve(__dirname, '.commands.nedb'), autoload: true }),
-  schedulesDatabase: Datastore.create({ filename: resolve(__dirname, '.schedules.nedb'), autoload: true }),
+  serversDatabase: Datastore.create({ filename: resolve(databaseDirectory, '.servers.nedb'), autoload: true }),
+  commandsDatabase: Datastore.create({ filename: resolve(databaseDirectory, '.commands.nedb'), autoload: true }),
+  schedulesDatabase: Datastore.create({ filename: resolve(databaseDirectory, '.schedules.nedb'), autoload: true }),
   logsDatabase: Datastore.create({
-    filename: resolve(__dirname, '.logs.nedb'),
+    filename: resolve(databaseDirectory, '.logs.nedb'),
     autoload: true,
     timestampData: true,
   }),
