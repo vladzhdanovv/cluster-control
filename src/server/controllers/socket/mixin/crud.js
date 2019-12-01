@@ -13,9 +13,9 @@ module.exports = (model) => ({
     },
     async create(entity) {
       console.log('Creating ', entity);
-      await model.insert(entity);
+      const result = await model.insert(entity);
       this.emitters.data(await this.methods.getDataPromise());
-      return entity;
+      return result;
     },
     async update({ _id, item }) {
       console.log('Updating ', _id, item);
