@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 const fs = require('fs');
+const path = require('path');
 const colors = require('colors');
 const prompts = require('prompts');
 const { passwordFile } = require('../config');
 const hash = require('../src/server/helpers/hash');
 
 const random = length => Math.random().toString(length * 3).slice(-length);
+
+try {
+  fs.mkdirSync(path.dirname(passwordFile));
+} catch (e) {}
 
 const onSubmit = ({ name }, answer) => {
   const isRandom = name === 'choice' && answer === 'random';

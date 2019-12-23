@@ -1,6 +1,9 @@
+const { resolve } = require('path');
+const homedir = require('os').homedir();
+
 const config = {
   all: {
-    passwordFile: require('path').resolve(__dirname, '.passwd')
+    passwordFile: resolve(homedir, '.cluster-control', '.passwd')
   },
   production: {
     port: 8001,
