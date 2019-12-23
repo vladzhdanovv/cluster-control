@@ -41,5 +41,7 @@ const questions = [
   }
 ];
 
+if (fs.existsSync(passwordFile)) process.exit(0);
+
 console.log("Setup password to cluster control".bold.yellow);
 (async () => await prompts(questions, { onSubmit }))();
