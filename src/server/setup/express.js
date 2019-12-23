@@ -7,17 +7,11 @@ const gaikan = require('gaikan');
 const history = require('connect-history-api-fallback');
 const config = require("../../../config");
 const basicAuth = require('express-basic-auth');
-const crypto = require('crypto');
-
-function myAuthorizer(username, password) {
-  const userMatches = basicAuth.safeCompare(username, 'admin');
-  const passwordMatches = basicAuth.safeCompare(crypto.createHash('md5').update(password).digest('hex'), 'c8671abd9c2fda6d15acaa625ec5889e');
-  return userMatches & passwordMatches
-}
+const authorizer = require('../services/authorizer');
 
 const app = express();
 app.use(basicAuth({
-  authorizer: myAuthorizer,
+  authorizer,
   challenge: true,
 }));
 app.set('views', path.resolve(__dirname, '..', 'view'));

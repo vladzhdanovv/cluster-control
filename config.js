@@ -1,4 +1,7 @@
 const config = {
+  all: {
+    passwordFile: require('path').resolve(__dirname, '.passwd')
+  },
   production: {
     port: 8001,
   },
